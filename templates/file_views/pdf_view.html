@@ -1,0 +1,17 @@
+<!-- progress.html --><!-- page1.html -->
+{% extends "file_views/base_file_view.html" %}
+
+{% block title %}
+    ClimaLab - {{tmp_title}}
+{% endblock %}
+
+{% block content %}
+<h3 class="ml-5 mr-5">{{tmp_title}}</h3>
+<div class="border rounded pr-4 pb-2 pl-4 ml-5 mr-5"/>
+    <div class="container">
+        <embed src="{{ pdf_url }}" type="application/pdf" width="100%" height="600px">
+    </div>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</div>
+
+{% endblock %}

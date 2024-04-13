@@ -1,0 +1,52 @@
+<!-- progress.html --><!-- page1.html -->
+{% extends "file_views/base_file_view.html" %}
+
+{% block title %}
+    ClimaLab - {{tmp_title}}
+{% endblock %}
+
+{% block content %}
+<h3 class="ml-5 mr-5">{{tmp_title}}</h3>
+<div class="csv_container border rounded pr-4 pb-2 pl-4 ml-5 mr-5">
+    <table class="table">
+        <thead>
+            <tr>
+                {% for header in csv_data[0] %}
+                    <th>{{ header }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in csv_data[1:] %}
+                <tr>
+                    {% for value in row %}
+                        <td>{{ value }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div class="csv_container border rounded pr-4 pb-2 pl-4 ml-5 mr-5">
+    <table class="table">
+        <thead>
+            <tr>
+                {% for header in csv_data_describe[0] %}
+                    <th>{{ header }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in csv_data_describe[1:] %}
+                <tr>
+                    {% for value in row %}
+                        <td>{{ value }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+{% endblock %}

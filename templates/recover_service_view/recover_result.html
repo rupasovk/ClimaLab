@@ -1,0 +1,42 @@
+<!-- progress.html --><!-- page1.html -->
+{% extends "base.html" %}
+
+{% block title %}
+    ClimaLab - Результат восстановления
+{% endblock %}
+
+{% block content %}
+
+<div class="container border rounded">
+    <h4>Восстановление данных</h4>
+    <div class="container border rounded pt-2 pr-2 pb-2 pl-4 m-2">
+        <div class="csv_container border rounded pr-4 pb-2 pl-4 ml-5 mr-5">
+            <table class="table">
+                <thead>
+                    <tr>
+                        {% for header in recover_data[0] %}
+                            <th>{{ header }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in recover_data[1:] %}
+                        <tr>
+                            {% for value in row %}
+                                <td>{{ value }}</td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="container">
+          <h1>График Pandas с использованием Bootstrap</h1>
+          <img src="/static/graph.png" alt="График">
+        </div>
+    </div>
+</div>
+<!-- Подключение Bootstrap JavaScript -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+{% endblock %}

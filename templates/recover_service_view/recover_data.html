@@ -1,0 +1,72 @@
+<!-- progress.html --><!-- page1.html -->
+{% extends "base.html" %}
+
+{% block title %}
+    ClimaLab - Восстановление данных
+{% endblock %}
+
+{% block content %}
+
+<div class="container border rounded">
+    <h4>Восстановление данных</h4>
+    <div class="container border rounded pt-2 pr-2 pb-2 pl-4 m-2">
+        <h5>Загрузите файл</h5>
+        <h8>Файл должен содержать...</h8>
+
+    <!-- Форма для загрузки файла -->
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="file">Выберите файл:</label>
+            <input type="file" class="form-control-file" id="file" name="file">
+        </div>
+        <button type="submit" class="btn btn-primary">Загрузить</button>
+    </form>
+    </div>
+
+    <div class="container border rounded pt-2 pr-4 pb-2 pl-4 m-2">
+        <h6>Параметры восстановления</h6>
+        <!-- Кнопка для запуска восстановления -->
+        <form action="/recover" method="get">
+            <div class="form-group">
+                <!--stations_filename: str, stations_filename_sep: str, data_filename: str, data_filename_sep: str, output_filename: str, data_type: str-->
+                <label for="stations_filename">Введите название файла со станциями:</label>
+                <input type="text" class="form-control" id="stations_filename" name="stations_filename" value="list_of_station_id_test.csv">
+
+                <label for="stations_filename_sep">Разделитель:</label>
+                <input type="text" class="form-control" id="stations_filename_sep" name="stations_filename_sep" value=";">
+
+                <label for="data_filename">Введите название файла с пропусками:</label>
+                <input type="text" class="form-control" id="data_filename" name="data_filename" value="output_clean_data_test.csv">
+
+                <label for="data_filename_sep">Разделитель:</label>
+                <input type="text" class="form-control" id="data_filename_sep" name="data_filename_sep" value=",">
+
+                <label for="output_filename">Введите название выходного файла:</label>
+                <input type="text" class="form-control" id="output_filename" name="output_filename" value="output_filling_data_test.csv">
+
+                <label for="data_type">Тип данных:</label>
+                <input type="text" class="form-control" id="data_type" name="data_type" value="temperature">
+
+                <label for="model_type">Модель:</label>
+                <select class="form-control" id="model_type" name="model_type">
+                  <option value="mean">Метод среднего</option>
+                  <option value="regression">Регрессия</option>
+                  <option value="kriging">Кригинг</option>
+                </select>
+            </div>
+            <ul class="p-0">
+                <a>
+                    <button type="submit" name="button" value="real" class="btn btn-primary">Запустить восстановление</button>
+                </a>
+                <a>
+                    <button type="submit" name="button" value="test" class="btn btn-primary">Тест выбранной модели</button>
+                </a>
+            </ul>
+        </form>
+    </div>
+</div>
+<!-- Подключение Bootstrap JavaScript -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+{% endblock %}

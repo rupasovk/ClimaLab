@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}
+    ClimaLab - Управление файлами
+{% endblock %}
+
+{% block content %}
+
+    <div class="container border rounded">
+        <h1>Управление файлами</h1>
+
+        <div class="container border rounded pt-2 pr-4 pb-2 pl-4 m-2">
+            <!-- Форма для загрузки файла -->
+            <form action="/upload" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="file">Выберите файл:</label>
+                    <input type="file" class="form-control-file" id="file" name="file" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Загрузить</button>
+            </form>
+        </div>
+
+        <hr>
+
+        <div class="container border rounded pt-2 pr-4 pb-2 pl-4 m-2">
+            <h2>Файлы:</h2>
+            <h7>{{ viewable_extensions }}</h7>
+            <ul>
+                {% for file in files %}
+                    <li>
+                        {{ file }}
+                        <a href="/static/{{ file }}" download>Скачать</a>
+                        <a href="#" class="delete-file" data-filename="{{ file }}">Удалить</a>
+                        {% set file_extension = file|splitext|lower %}
+                        {% if file_extension in viewable_extensions %}
+                            <a href="/view/{{ file }}" class="view-file" target="_blank">Просмотр</a>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <script>
+                // Обработчик клика на ссылке "Удалить"
+                document.querySelectorAll('.delete-file').forEach(function(link) {
+                    link.addEventListener('click', function(event) {
+                        event.preventDefault();
+                        var filename = this.getAttribute('data-filename');
+                        deleteFile(filename);
+                    });
+                });
+
+                // Функция для удаления файла
+                function deleteFile(filename) {
+                    fetch('/delete', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            filename: filename
+                        })
+                    })
+                    .then(function(response) {
+                        return response.json();
+                    })
+                    .then(function(data) {
+                        console.log(data);
+                        // Обновление списка файлов после удаления
+                        location.reload();
+                    })
+                    .catch(function(error) {
+                        console.error(error);
+                    });
+                }
+            </script>
+        </div>
+
+    </div>
+{% endblock %}

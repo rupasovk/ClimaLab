@@ -1,0 +1,58 @@
+<!-- progress.html --><!-- page1.html -->
+{% extends "base.html" %}
+
+{% block title %}
+    ClimaLab - Чистка данных
+{% endblock %}
+
+{% block content %}
+
+<div class="container border rounded">
+    <h4>Чистка данных</h4>
+    <div class="container border rounded pt-2 pr-2 pb-2 pl-4 m-2">
+        <h5>Загрузите файл</h5>
+        <h8>Файл должен содержать...</h8>
+
+    <!-- Форма для загрузки файла -->
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="file">Выберите файл:</label>
+            <input type="file" class="form-control-file" id="file" name="file">
+        </div>
+        <button type="submit" class="btn btn-primary">Загрузить</button>
+    </form>
+    </div>
+
+    <div class="container border rounded pt-2 pr-4 pb-2 pl-4 m-2">
+        <h6>Параметры чистки</h6>
+        <!-- Кнопка для запуска чистки -->
+        <form action="/cleaning" method="get">
+            <div class="form-group">
+                <label for="filename">Введите название файла с данными:</label>
+                <input type="text" class="form-control" id="filename" name="filename" value="output_weather.csv">
+                <label for="min_error_bound">Введите отрицательный код ошибки (-999):</label>
+                <input type="text" class="form-control" id="min_error_bound" name="min_error_bound" value="-999">
+                <label for="max_error_bound">Введите положительный код ошибки (999):</label>
+                <input type="text" class="form-control" id="max_error_bound" name="max_error_bound" value="999">
+                <label for="output_filename">Введите название выходного файла:</label>
+                <input type="text" class="form-control" id="output_filename" name="output_filename" value="output_clean_data.csv">
+            </div>
+            <button type="submit" class="btn btn-primary">Запустить чистку</button>
+        </form>
+
+
+    <!--
+        <h7>Прогресс обработки</h7>
+
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" style="width: {{ progress }}%;" aria-valuenow="{{ progress }}" aria-valuemin="0" aria-valuemax="100">{{ progress }}%</div>
+        </div>
+    -->
+
+    </div>
+
+</div>
+<!-- Подключение Bootstrap JavaScript -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+{% endblock %}

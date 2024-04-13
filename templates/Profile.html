@@ -1,0 +1,23 @@
+<!-- page1.html -->
+{% extends "base.html" %}
+
+{% block title %}
+    ClimaLab - О нас
+{% endblock %}
+
+{% block content %}
+<div class="container border rounded">
+    <h1>User Profile</h1>
+
+    <div class="card" style="width: 18rem;">
+        <img src="{{ user.photo }}" class="card-img-top" alt="User Photo">
+        <div class="card-body">
+            <h5 class="card-title">{{ user.nickname }}</h5>
+            <p class="card-text">
+                <strong>Name:</strong> {{ user.first_name }} {{ user.last_name }}<br>
+                <strong>Email:</strong> {{ user.email }}
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Стили для выдвигающегося меню */
+        .menu {
+            position: fixed;
+            top: 0;
+            left: -250px;
+            width: 250px;
+            height: 100vh;
+            background-color: #f8f9fa;
+            transition: left 0.3s ease-in-out;
+        }
+
+        .menu.open {
+            left: 0;
+        }
+
+        .menu ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .menu ul li {
+            padding: 10px 20px;
+        }
+
+        .wrapper {
+          min-height: calc(100% - 100px);
+          display: flex;
+          flex-direction: column;
+          min-height: 100vh;
+        }
+
+        html, body {
+            height: 95%;
+        }
+
+        .content {
+            min-height: calc(100% - 100px); /* Высота контента за вычетом высоты подвала */
+            margin-bottom: 20px; /* Отступ снизу, равный высоте подвала */
+        }
+
+        .footer {
+            height: 25%;
+            background-color: #f8f9fa; /* Цвет фона подвала */
+            background: #333;
+            color: #fff;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+
+        .csv_container {
+          max-height: 400px; /* Установите желаемую максимальную высоту контейнера */
+          overflow-y: auto; /* Добавьте прокрутку по вертикали */
+        }
+    </style>
+</head>
+<body>
+    <!-- Заголовок -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">ClimaLab</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link {% if nav_param == 'main' %}active{% endif %}" href="/">Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if nav_param == 'parsing' %}active{% endif %}" href="parsing">Парсинг</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if nav_param == 'cleaning' %}active{% endif %}" href="cleaning_page">Чистка данных</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if nav_param == 'recover' %}active{% endif %}" href="recover_page">Восстановление данных</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if nav_param == 'file' %}active{% endif %}" href="file_management">Файлы</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if nav_param == 'about' %}active{% endif %}" href="about">О нас</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="netcdf_page" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          NetCDF
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          <a class="dropdown-item" href="netcdf_page">NetCDF func1</a>
+                          <a class="dropdown-item" href="netcdf_page">NetCDF func1</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+
+    <div class="content">
+    {% block content %}
+    {% endblock %}
+    </div>
+
+    <!-- Подвал -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 ClimaLab. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <!-- Выдвигающееся меню -->
+    <div class="menu">
+        <ul>
+            <li><a class="nav-link" href="/">Главная</a></li>
+            <li><a class="nav-link" href="parsing">Парсинг</a></li>
+            <li><a class="nav-link" href="cleaning_page">Чистка данных</a></li>
+            <li><a class="nav-link" href="recover_page">Восстановление данных</a></li>
+            <li><a class="nav-link" href="file_management">Файлы</a></li>
+            <li><a class="nav-link" href="about">О нас</a></li>
+        </ul>
+    </div>
+
+    <!-- Скрипты для работы выдвигающегося меню -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".navbar-toggler").click(function () {
+                $(".menu").toggleClass("open");
+            });
+        });
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

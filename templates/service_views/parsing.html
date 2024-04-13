@@ -1,0 +1,64 @@
+<!-- progress.html --><!-- page1.html -->
+{% extends "base.html" %}
+
+{% block title %}
+    ClimaLab - Парсинг
+{% endblock %}
+
+{% block content %}
+
+<div class="container border rounded">
+    <h4>Парсинг с портала "Погода и климат"</h4>
+    <div class="container border rounded pt-2 pr-2 pb-2 pl-4 m-2">
+        <h5>Загрузите файл станций</h5>
+        <h8>Файл должен содержать колонку Index с номерами интересующих вас станций</h8>
+    <!-- Форма для загрузки файла -->
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="file">Выберите файл:</label>
+                <input type="file" class="form-control-file" id="file" name="file">
+            </div>
+            <button type="submit" class="btn btn-primary">Загрузить</button>
+        </form>
+        <ul class="list-group">
+            {% for file in files %}
+            <li class="list-group-item">
+                <a href="/static/{{ file }}">{{ file }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+
+    <div class="container border rounded pt-2 pr-4 pb-2 pl-4 m-2">
+        <h6>Параметры парсинга</h6>
+        <!-- Параметры для запуска парсинга -->
+        <form action="/parse" method="get">
+            <div class="form-group">
+                <label for="filename">Введите название исходного файла:</label>
+                <input type="text" class="form-control" id="filename" name="filename" value="list_of_station_id_test.csv">
+                <label for="separator">Разделитель:</label>
+                <input type="text" class="form-control" id="separator" name="separator" value=";">
+                <label class="pt-4" for="output_filename">Введите название выходного файла:</label>
+                <input type="text" class="form-control" id="output_filename" name="output_filename" value="output_weather.csv">
+
+                <button type="submit" class="btn btn-primary mt-2">Запустить парсинг</button>
+            </div>
+        </form>
+        </div>
+    </div>
+
+<!--
+    <h7>Прогресс обработки</h7>
+
+    <div class="progress">
+        <div class="progress-bar" role="progressbar" style="width: {{ progress }}%;" aria-valuenow="{{ progress }}" aria-valuemin="0" aria-valuemax="100">{{ progress }}%</div>
+    </div>
+-->
+
+</div>
+
+<!-- Подключение Bootstrap JavaScript -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+{% endblock %}

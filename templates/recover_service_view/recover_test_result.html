@@ -1,0 +1,109 @@
+<!-- progress.html --><!-- page1.html -->
+{% extends "base.html" %}
+
+{% block title %}
+    ClimaLab - Результат восстановления
+{% endblock %}
+
+{% block content %}
+
+<div class="container border rounded">
+    <h3>Восстановление данных методом {%if model_type=="mean"%} среднего {%endif%}{%if model_type=="regression"%} регрессии {%endif%}{%if model_type=="kriging"%} кригинга {%endif%} (тест модели)</h3>
+    <h4 class="mt-4">Исходные данные с искусственными пропусками:</h4>
+    <div class="csv_container border rounded">
+        <!-- missing_data, recover_data, regression_results, errors -->
+        <table class="table">
+            <thead>
+                <tr>
+                    {% for column in missing_data.columns %}
+                        <th>{{ column }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in missing_data.iterrows() %}
+                    <tr>
+                        {% for value in row[1] %}
+                            <td>{{ value }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <h4 class="mt-4">Восстановленные данные:</h4>
+    <div class="csv_container border rounded">
+        <table class="table">
+            <thead>
+                <tr>
+                    {% for column in recover_data.columns %}
+                        <th>{{ column }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in recover_data.iterrows() %}
+                    <tr>
+                        {% for value in row[1] %}
+                            <td>{{ value }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <h4 class="mt-4">Коэффициенты регрессии:</h4>
+    <div class="csv_container border rounded">
+        <table class="table">
+            <thead>
+                <tr>
+                    {% for column in regression_results.columns %}
+                        <th>{{ column }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in regression_results.iterrows() %}
+                    <tr>
+                        {% for value in row[1] %}
+                            <td>{{ value }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <h4 class="mt-4">Ошибки:</h4>
+    <h5>MAE: {{errors[0]}}</h5>
+    <h5>MAPE: {{errors[1]}}</h5>
+    <h5>RMSE: {{errors[2]}}</h5>
+    <h5>Стандартное отклонение:</h5>
+    <div class="csv_container border rounded"> <!-- pr-4 pb-2 pl-4 ml-5 mr-5-->
+        <table class="table">
+            <thead>
+                <tr>
+                    {% for column in errors[3].columns %}
+                        <th>{{ column }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in errors[3].iterrows() %}
+                    <tr>
+                        {% for value in row[1] %}
+                            <td>{{ value }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="container">
+      <h4 class="mt-4">Тестовый график</h4>
+      <img src="/static/graph.png" alt="График">
+    </div>
+</div>
+<!-- Подключение Bootstrap JavaScript -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+{% endblock %}
