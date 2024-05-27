@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NetCDF Viewer - Result</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>NetCDF Viewer - Result</h1>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Variable</th>
+                    <th>Dimensions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for variable in dataset.variables.values() %}
+                    <tr>
+                        <td>{{ variable.name }}</td>
+                        <td>{{ variable.dimensions }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

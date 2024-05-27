@@ -45,3 +45,7 @@ def raster_map(filename, output_filename):
 def raster_concat(filenames, output_filename):
 
     return {"message": "Raster map generated successfully"}
+
+
+#################################################
+

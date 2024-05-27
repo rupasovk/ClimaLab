@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NetCDF Viewer</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>NetCDF Viewer</h1>
+
+        <form action="/process-file" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="file-input">Select NetCDF File:</label>
+                <input type="file" class="form-control-file" id="file-input" name="file">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+        {% if image %}
+            <div class="mt-5">
+                <h2>Raster Image</h2>
+                {{ image | safe }}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

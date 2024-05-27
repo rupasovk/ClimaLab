@@ -1,59 +1,72 @@
-<!-- progress.html --><!-- page1.html -->
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NetCDF Viewer</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>NetCDF Viewer</h1>
 
-{% block title %}
-    ClimaLab - NetCDF
-{% endblock %}
-
-{% block content %}
-
-<div class="container border rounded">
-    <h4>Обработка NetCDF файлов</h4>
-    <div class="container border rounded pt-2 pr-2 pb-2 pl-4 m-2">
-        <h5>Загрузите файл</h5>
-        <h8>Файл должен содержать...</h8>
-
-    <!-- Форма для загрузки файла -->
-    <form action="/upload" method="post" enctype="multipart/form-data">
-        <div class="form-group">
-            <label for="file">Выберите файл:</label>
-            <input type="file" class="form-control-file" id="file" name="file">
-        </div>
-        <button type="submit" class="btn btn-primary">Загрузить</button>
-    </form>
-    </div>
-
-    <div class="container border rounded pt-2 pr-4 pb-2 pl-4 m-2">
-        <h6>Просмотр файла</h6>
-        <form action="/netcdf_map" method="get">
+        <form id="channel-form" action="/process-channel" method="post">
             <div class="form-group">
-                <!--stations_filename: str, stations_filename_sep: str, data_filename: str, data_filename_sep: str, output_filename: str, data_type: str-->
-                <label for="open_filename">Введите название файла:</label>
-                <input type="text" class="form-control" id="open_filename" name="open_filename" value="kriging_results (4).nc">
+                <label for="channel-select">Select Channel:</label>
+                <select class="form-control" id="channel-select" name="channel_name">
+                    <!-- Здесь будет динамически добавлен список каналов -->
+                </select>
             </div>
-            <button type="submit" name="button" value="real" class="btn btn-primary">Открыть</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
         </form>
+
+        <div id="chart"></div>
     </div>
 
-    <div class="container border rounded pt-2 pr-4 pb-2 pl-4 m-2">
-        <form action="/netcdf_concat" method="get">
-            <div class="form-group">
-                <!--stations_filename: str, stations_filename_sep: str, data_filename: str, data_filename_sep: str, output_filename: str, data_type: str-->
-                <label for="concat_files">Перечислите файлы для конкатенации через разделитель:</label>
-                <input type="text" class="form-control" id="concat_files" name="concat_files" value="list_of_station_id_test.csv">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Получение списка доступных каналов при загрузке страницы
+            $.get("/available-channels", function(data) {
+                var channelSelect = $("#channel-select");
+                $.each(data, function(index, channel) {
+                    channelSelect.append($("<option>").text(channel).val(channel));
+                });
+            });
 
-                <label for="concat_files_sep">Разделитель:</label>
-                <input type="text" class="form-control" id="concat_files_sep" name="concat_files_sep" value=",">
+            // Обработка выбранного канала
+            $("#channel-form").submit(function(e) {
+                e.preventDefault();
+                var selectedChannel = $("#channel-select").val();
+                $.post("/process-channel", { channel_name: selectedChannel }, function(data) {
+                    renderChart(data);
+                });
+            });
 
-                <label for="output_filename">Введите название выходного файла:</label>
-                <input type="text" class="form-control" id="output_filename" name="output_filename" value="output_clean_data_test.csv">
-            </div>
-            <button type="submit" name="button" value="real" class="btn btn-primary">Запустить конкатенацию</button>
-        </form>
-    </div>
-</div>
-<!-- Подключение Bootstrap JavaScript -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+            // Функция для отображения графика
+            function renderChart(data) {
+                var chartDiv = $("#chart");
 
-{% endblock %}
+                var trace = {
+                    x: [...Array(data.length).keys()],
+                    y: data,
+                    type: 'scatter',
+                    mode: 'lines'
+                };
+
+                var layout = {
+                    title: 'NetCDF Channel Data',
+                    xaxis: {
+                        title: 'Index'
+                    },
+                    yaxis: {
+                        title: 'Value'
+                    }
+                };
+
+                var plotData = [trace];
+                Plotly.newPlot(chartDiv[0], plotData, layout);
+            }
+        });
+    </script>
+</body>
+</html>

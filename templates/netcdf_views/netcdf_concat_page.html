@@ -1,0 +1,59 @@
+<!-- progress.html --><!-- page1.html -->
+{% extends "base.html" %}
+
+{% block title %}
+    ClimaLab - NetCDF
+{% endblock %}
+
+{% block content %}
+
+<div class="container border rounded">
+    <h4>Обработка NetCDF файлов</h4>
+    <div class="container border rounded pt-2 pr-2 pb-2 pl-4 m-2">
+        <h5>Загрузите файл</h5>
+        <h8>Файл должен содержать...</h8>
+
+    <!-- Форма для загрузки файла -->
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="file">Выберите файл:</label>
+            <input type="file" class="form-control-file" id="file" name="file">
+        </div>
+        <button type="submit" class="btn btn-primary">Загрузить</button>
+    </form>
+    </div>
+
+    <div class="container border rounded pt-2 pr-4 pb-2 pl-4 m-2">
+        <h6>Просмотр файла</h6>
+        <form action="/netcdf_map" method="get">
+            <div class="form-group">
+                <!--stations_filename: str, stations_filename_sep: str, data_filename: str, data_filename_sep: str, output_filename: str, data_type: str-->
+                <label for="open_filename">Введите название файла:</label>
+                <input type="text" class="form-control" id="open_filename" name="open_filename" value="kriging_results (4).nc">
+            </div>
+            <button type="submit" name="button" value="real" class="btn btn-primary">Открыть</button>
+        </form>
+    </div>
+
+    <div class="container border rounded pt-2 pr-4 pb-2 pl-4 m-2">
+        <form action="/netcdf_concat" method="get">
+            <div class="form-group">
+                <!--stations_filename: str, stations_filename_sep: str, data_filename: str, data_filename_sep: str, output_filename: str, data_type: str-->
+                <label for="concat_files">Перечислите файлы для конкатенации через разделитель:</label>
+                <input type="text" class="form-control" id="concat_files" name="concat_files" value="list_of_station_id_test.csv">
+
+                <label for="concat_files_sep">Разделитель:</label>
+                <input type="text" class="form-control" id="concat_files_sep" name="concat_files_sep" value=",">
+
+                <label for="output_filename">Введите название выходного файла:</label>
+                <input type="text" class="form-control" id="output_filename" name="output_filename" value="output_clean_data_test.csv">
+            </div>
+            <button type="submit" name="button" value="real" class="btn btn-primary">Запустить конкатенацию</button>
+        </form>
+    </div>
+</div>
+<!-- Подключение Bootstrap JavaScript -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+{% endblock %}
