@@ -9,7 +9,16 @@ from fastapi.templating import Jinja2Templates
 import csv
 
 from fastapi import FastAPI
+from database.models import engine, Base
+from sqlalchemy.orm import relationship, sessionmaker
 
+# Создание сессии
+Session = sessionmaker(bind=engine)
+session = Session()
+
+
+# Создание таблиц в базе данных
+Base.metadata.create_all(bind=engine)
 
 from api.main_routes import main_router
 from api.file_processing_routes import file_processing_router

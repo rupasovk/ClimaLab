@@ -3,15 +3,11 @@ import cartopy
 from fastapi import FastAPI, File, UploadFile, Request
 import os
 from fastapi.templating import Jinja2Templates
+import config
 
 main_router = APIRouter()
 
 templates = Jinja2Templates(directory="templates")
-
-
-directory_name = "static/"
-service_views_directory_name = "service_views/"
-file_views_directory_name = "file_views/"
 
 
 @main_router.get("/")
@@ -41,7 +37,7 @@ async def home(request: Request):
 
 @main_router.get("/parsing")
 async def parsing(request: Request):
-    return templates.TemplateResponse(service_views_directory_name + "parsing.html", {"request": request, "nav_param": "parsing"})
+    return templates.TemplateResponse(config.service_views_directory_name + "parsing.html", {"request": request, "nav_param": "parsing"})
 
 
 @main_router.get("/file_management1")

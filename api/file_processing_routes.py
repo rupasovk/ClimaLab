@@ -8,6 +8,7 @@ from pydantic import BaseModel
 import csv
 import pandas as pd
 import os
+import config
 
 
 file_processing_router = APIRouter()
@@ -26,11 +27,6 @@ def splitext(value):
 
 # Регистрация функции-фильтра splitext в Jinja2
 templates.env.filters['splitext'] = splitext
-
-
-directory_name = "static/"
-service_views_directory_name = "service_views/"
-file_views_directory_name = "file_views/"
 
 
 @file_processing_router.get("/page1")
@@ -129,7 +125,7 @@ async def view_file(request: Request, filename: str):
 
     elif file_extension == "csv":
         # Путь к файлу в папке static
-        file_path = f"{directory_name + filename}"
+        file_path = f"{config.directory_name + filename}"
 
         # Чтение данных из файла
         csv_data = []
@@ -146,13 +142,13 @@ async def view_file(request: Request, filename: str):
         # print(df.dropna().std())
         # csv_data_describe = df.describe()
 
-        return templates.TemplateResponse(file_views_directory_name + "csv_view.html", {"request": request, "csv_data": csv_data, "csv_data_describe": csv_data_describe, "tmp_title": "Просмотр csv файла: " + filename})
+        return templates.TemplateResponse(config.file_views_directory_name + "csv_view.html", {"request": request, "csv_data": csv_data, "csv_data_describe": csv_data_describe, "tmp_title": "Просмотр csv файла: " + filename})
 
     elif file_extension in ["png", "jpg", "jpeg", "gif"]:
         # Логика для открытия картинки
         # image_url = request.url_for("get_image", filename=filename)
         image_path = f"{filename}"
-        return templates.TemplateResponse(file_views_directory_name + "image_view.html", {"request": request, "image_path": image_path, "tmp_title": "Просмотр image файла: " + filename})
+        return templates.TemplateResponse(config.file_views_directory_name + "image_view.html", {"request": request, "image_path": image_path, "tmp_title": "Просмотр image файла: " + filename})
 # /////END//////////////////////////////////////////////////////////////////
 
 

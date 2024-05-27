@@ -2,14 +2,10 @@ from fastapi import APIRouter
 from fastapi import FastAPI, File, UploadFile, Request, WebSocket, Form
 from service import parsing_service as ps
 from fastapi.templating import Jinja2Templates
+import config
 
 parsing_router = APIRouter()
 templates = Jinja2Templates(directory="templates")
-
-
-directory_name = "static/"
-service_views_directory_name = "service_views/"
-file_views_directory_name = "file_views/"
 
 
 @parsing_router.get("/parse")
@@ -26,5 +22,5 @@ async def start_parsing_weather_climate(request: Request, filename: str, separat
     # print(station_ids)
 
     ps.start_parsing(filename, separator, output_filename)
-    return templates.TemplateResponse(service_views_directory_name + "parsing.html", {"request": request})
+    return templates.TemplateResponse(config.service_views_directory_name + "parsing.html", {"request": request})
 

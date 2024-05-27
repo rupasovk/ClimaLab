@@ -5,15 +5,11 @@ import pandas as pd
 from fastapi.responses import HTMLResponse, RedirectResponse
 from service import recover_service as rs
 from fastapi.templating import Jinja2Templates
-
+import config
 
 gaps_filling_router = APIRouter()
 
 templates = Jinja2Templates(directory="templates")
-
-directory_name = "static/"
-service_views_directory_name = "service_views/"
-file_views_directory_name = "file_views/"
 
 
 @gaps_filling_router.get("/recover1")
@@ -91,7 +87,7 @@ async def recover_test(request: Request, stations_filename: str, stations_filena
     plt.savefig('static/graph.png')
     plt.close()
 
-    missing_data, recover_data, regression_results, errors = rs.test_recover(directory_name + data_filename, data_filename_sep, directory_name + stations_filename, stations_filename_sep, output_filename, data_type, model_type)
+    missing_data, recover_data, regression_results, errors = rs.test_recover(config.directory_name + data_filename, data_filename_sep, config.directory_name + stations_filename, stations_filename_sep, output_filename, data_type, model_type)
 
     # print("missing_data", missing_data)
     # print("recover_data", recover_data)
