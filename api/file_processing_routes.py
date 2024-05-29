@@ -11,7 +11,7 @@ import os
 import config
 
 
-file_processing_router = APIRouter()
+file_processing_router = APIRouter(tags=["File Processing"])
 templates = Jinja2Templates(directory="templates")
 
 # Глобальная переменная с поддерживаемыми расширениями файлов для просмотра

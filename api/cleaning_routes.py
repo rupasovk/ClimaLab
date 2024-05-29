@@ -7,7 +7,7 @@ from service import cleaning_service as cs
 import config
 
 
-cleaning_router = APIRouter()
+cleaning_router = APIRouter(tags=["Cleaning"])
 
 templates = Jinja2Templates(directory="templates")
 

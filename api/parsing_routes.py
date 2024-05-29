@@ -4,7 +4,7 @@ from service import parsing_service as ps
 from fastapi.templating import Jinja2Templates
 import config
 
-parsing_router = APIRouter()
+parsing_router = APIRouter(tags=["Parsing"])
 templates = Jinja2Templates(directory="templates")
 
 

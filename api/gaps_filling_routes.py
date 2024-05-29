@@ -7,7 +7,7 @@ from service import recover_service as rs
 from fastapi.templating import Jinja2Templates
 import config
 
-gaps_filling_router = APIRouter()
+gaps_filling_router = APIRouter(tags=["Gaps Filling"])
 
 templates = Jinja2Templates(directory="templates")
 

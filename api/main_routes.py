@@ -5,7 +5,7 @@ import os
 from fastapi.templating import Jinja2Templates
 import config
 
-main_router = APIRouter()
+main_router = APIRouter(tags=["Main"])
 
 templates = Jinja2Templates(directory="templates")
 
@@ -51,3 +51,8 @@ async def files(request: Request):
 @main_router.get("/about")
 async def files(request: Request):
     return templates.TemplateResponse("about.html", {"request": request, "nav_param": "about"})
+
+
+# @main_router.get("/users")
+# async def files(request: Request):
+#    return templates.TemplateResponse("users.html", {"request": request, "nav_param": "users"})

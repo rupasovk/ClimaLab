@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}
+    ClimaLab - Регистрация
+{% endblock %}
+
+{% block content %}
+    <div class="container my-5">
+        <h1 class="mb-4">Users</h1>
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>
+                        <a href="/users/{{ user.id }}" class="btn btn-primary btn-sm">View</a>
+                        <a href="/users/edit/{{ user.id }}" class="btn btn-secondary btn-sm">Edit</a>
+                        <a href="/users/delete/{{ user.id }}" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

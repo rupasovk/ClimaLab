@@ -1,6 +1,5 @@
 import cartopy
 from fastapi import FastAPI, File, UploadFile, Request, WebSocket, Form
-#ddd
 from fastapi.staticfiles import StaticFiles
 import os
 from service import netcdf_service as ncs
@@ -25,6 +24,8 @@ from api.file_processing_routes import file_processing_router
 from api.cleaning_routes import cleaning_router
 from api.parsing_routes import parsing_router
 from api.gaps_filling_routes import gaps_filling_router
+from api.user_routes import user_router
+from api.profile_routes import profile_router
 
 #from database import database
 #from model.User import User
@@ -40,6 +41,8 @@ app.include_router(file_processing_router)
 app.include_router(cleaning_router)
 app.include_router(parsing_router)
 app.include_router(gaps_filling_router)
+app.include_router(user_router)
+app.include_router(profile_router)
 
 templates = Jinja2Templates(directory="templates")
 

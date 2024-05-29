@@ -10,7 +10,7 @@ Base = declarative_base()
 
 # Создание engine
 engine = create_engine(config.DB_URL)
-#Base.metadata.create_all(engine)
+Base.metadata.create_all(engine)
 
 
 class User(Base):
@@ -18,6 +18,7 @@ class User(Base):
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     name = Column(String)
     surname = Column(String)
+    hashed_password = Column(String)
     mail = Column(String)
     country = Column(String)
     organization = Column(String)
@@ -25,7 +26,7 @@ class User(Base):
     role = relationship("Role", uselist=False)
 
 
-class Post(Base):
+class Role(Base):
     __tablename__ = 'roles'
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     name = Column(String)
